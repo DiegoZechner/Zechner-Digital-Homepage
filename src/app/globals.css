@@ -1,26 +1,92 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* LIGHT MODE (Default) */
+  --background: #F7F3EA; /* Warm Ivory */
+  --card: #FFFDF7; /* Champagne White */
+  --foreground: #171A1F; /* Graphite Text */
+  --muted: #D8D3C7; /* Soft Silver */
+  --muted-foreground: #5F6670; /* Muted Graphite */
+  --border: #ECE7DD; /* Platinum */
+  --primary: #C6A15B; /* Champagne Gold */
+  --primary-foreground: #FFFDF7;
+  --accent: #0D3B3E; /* Deep Petrol */
+  --accent-foreground: #FFFDF7;
+  --destructive: #5A1F2E; /* Merlot */
+  --destructive-foreground: #FFFDF7;
+  
+  --color-glass-bg: rgba(255, 253, 247, 0.7);
+  --color-glass-border: rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  /* DARK MODE */
+  --background: #07090D; /* Obsidian Black */
+  --card: #11151B; /* Graphite Black */
+  --foreground: #F4F0E8; /* Champagne White */
+  --muted: #1B2028; /* Carbon Grey */
+  --muted-foreground: #CFC8BB; /* Soft Silver */
+  --border: #1B2028; /* Carbon Grey */
+  --primary: #C6A15B; /* Champagne Gold */
+  --primary-foreground: #07090D;
+  --accent: #0D3B3E; /* Deep Petrol */
+  --accent-foreground: #F4F0E8;
+  --destructive: #5A1F2E; /* Merlot */
+  --destructive-foreground: #F4F0E8;
+  
+  --color-glass-bg: rgba(17, 21, 27, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.05);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-card: var(--card);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Custom Utilities for glassmorphism and premium effects */
+@utility glass {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+}
+
+@utility text-gradient {
+  background: linear-gradient(to right, var(--foreground), var(--muted-foreground));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
