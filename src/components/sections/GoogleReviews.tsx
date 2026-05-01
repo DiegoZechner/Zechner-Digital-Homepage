@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 
 const reviews = [
   {
@@ -39,7 +38,6 @@ const reviews = [
 export function GoogleReviews() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-advance reviews
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
@@ -52,42 +50,48 @@ export function GoogleReviews() {
   };
 
   return (
-    <section className="py-24 bg-card text-foreground relative overflow-hidden">
-      {/* Background glow effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <section className="py-24 md:py-32 bg-foreground-secondary text-primary-foreground relative overflow-hidden">
+      {/* Subtle accent glow */}
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Text Content */}
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left: Text */}
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted border border-border text-xs font-medium text-primary mb-6">
-              <Star className="h-3 w-3 fill-current" />
-              <span>Google Reviews</span>
-            </div>
-            
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-gradient">
-              Stimmen von Kunden
+            <span className="font-mono-label text-primary-foreground/50 mb-4 block">
+              Client Stories
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-primary-foreground leading-[1.1]">
+              Trusted by
+              <br />
+              our clients.
             </h2>
-            <p className="text-muted-grey text-lg md:text-xl mb-8">
-              Vertrauen entsteht durch Ergebnisse. Hier ist Platz für echte Bewertungen und Feedback zu unseren Projekten.
+            <p className="text-primary-foreground/60 text-lg leading-relaxed mb-10 max-w-md">
+              Trust is built on results. Genuine feedback on our work
+              and collaboration.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild>
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  Auf Google ansehen
-                </a>
-              </Button>
-              <Button variant="outline" asChild>
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  Bewertung schreiben
-                </a>
-              </Button>
+            <div className="flex items-center gap-3">
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center h-12 px-7 rounded-lg bg-primary-foreground text-foreground-secondary font-mono-label hover:opacity-90 transition-opacity"
+              >
+                View on Google
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center h-12 px-7 rounded-lg border border-primary-foreground/20 text-primary-foreground font-mono-label hover:bg-primary-foreground/5 transition-colors"
+              >
+                Write a review
+              </a>
             </div>
           </div>
 
-          {/* Review Carousel */}
+          {/* Right: Review Card */}
           <div className="relative min-h-[350px] flex flex-col justify-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -96,9 +100,10 @@ export function GoogleReviews() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="glass p-8 md:p-10 rounded-2xl relative"
+                className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/[0.04] backdrop-blur-md p-8 md:p-10 relative"
               >
-                <div className="absolute top-8 right-8 text-primary/20">
+                {/* Decorative quote */}
+                <div className="absolute top-8 right-8 text-accent/20">
                   <svg
                     width="40"
                     height="40"
@@ -110,31 +115,33 @@ export function GoogleReviews() {
                   </svg>
                 </div>
 
+                {/* Stars */}
                 <div className="flex gap-1 mb-6">
                   {[...Array(reviews[currentIndex].rating)].map((_, i) => (
                     <Star
                       key={i}
-                      className="h-5 w-5 text-primary fill-primary"
+                      className="h-4 w-4 text-accent fill-accent"
                     />
                   ))}
                 </div>
 
-                <blockquote className="text-xl md:text-2xl font-medium leading-relaxed mb-8 text-foreground">
+                <blockquote className="text-xl md:text-2xl font-medium leading-relaxed mb-8 text-primary-foreground">
                   &quot;{reviews[currentIndex].content}&quot;
                 </blockquote>
 
                 <div className="flex items-center gap-4">
-                  <Avatar className="h-12 w-12 border-primary/30">
-                    <AvatarFallback className="bg-muted text-primary text-lg">
+                  <Avatar className="h-11 w-11 border border-primary-foreground/10">
+                    <AvatarFallback className="bg-accent/10 text-accent text-sm font-bold">
                       {reviews[currentIndex].name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="font-semibold text-foreground">
+                    <div className="font-semibold text-primary-foreground">
                       {reviews[currentIndex].name}
                     </div>
-                    <div className="text-sm text-muted-grey">
-                      {reviews[currentIndex].role}, {reviews[currentIndex].company}
+                    <div className="font-mono-label text-primary-foreground/50">
+                      {reviews[currentIndex].role},{" "}
+                      {reviews[currentIndex].company}
                     </div>
                   </div>
                 </div>
@@ -149,8 +156,8 @@ export function GoogleReviews() {
                   onClick={() => handleDotClick(idx)}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     idx === currentIndex
-                      ? "w-8 bg-primary"
-                      : "w-2 bg-muted hover:bg-muted-foreground"
+                      ? "w-8 bg-accent"
+                      : "w-2 bg-primary-foreground/20 hover:bg-primary-foreground/40"
                   }`}
                   aria-label={`Go to review ${idx + 1}`}
                 />

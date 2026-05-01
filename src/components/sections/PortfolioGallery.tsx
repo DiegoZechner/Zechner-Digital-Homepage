@@ -10,11 +10,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
 
 const portfolioItems = [
   {
     id: 1,
+    number: "01",
     title: "T&A Autoshop",
     description:
       "Interne App und digitale Workflows für Fahrzeugbestand, Aufgaben, Rollen und Verkaufsprozesse.",
@@ -24,6 +24,7 @@ const portfolioItems = [
   },
   {
     id: 2,
+    number: "02",
     title: "Haus Genie",
     description:
       "Moderner Webauftritt mit klarer Struktur, besserer Nutzerführung und stärkerem Fokus auf Anfragen.",
@@ -33,6 +34,7 @@ const portfolioItems = [
   },
   {
     id: 3,
+    number: "03",
     title: "Business Dashboard",
     description:
       "Dashboard-Konzept für bessere Übersicht, schnellere Entscheidungen und klarere Prozesse.",
@@ -44,18 +46,27 @@ const portfolioItems = [
 
 export function PortfolioGallery() {
   return (
-    <section className="py-24 bg-background text-foreground overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8 max-w-7xl">
-        <div className="mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-gradient">
-            Ausgewählte Projekte
-          </h2>
-          <p className="text-muted-grey text-lg md:text-xl max-w-2xl">
-            Digitale Lösungen, Websites und Systeme, die Unternehmen moderner,
-            effizienter und professioneller machen.
+    <section className="py-24 md:py-32 bg-background text-foreground overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        {/* Section Header */}
+        <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <span className="font-mono-label text-muted-foreground mb-4 block">
+              Selected Work
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
+              Projects that
+              <br />
+              deliver results.
+            </h2>
+          </div>
+          <p className="text-muted-foreground text-lg max-w-md leading-relaxed">
+            Digital solutions, websites, and systems that make companies more
+            modern, efficient, and professional.
           </p>
         </div>
 
+        {/* Portfolio Carousel */}
         <Carousel
           opts={{
             align: "start",
@@ -63,65 +74,69 @@ export function PortfolioGallery() {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-4 md:-ml-6">
+          <CarouselContent className="-ml-4 md:-ml-8">
             {portfolioItems.map((item) => (
               <CarouselItem
                 key={item.id}
-                className="pl-4 md:pl-6 md:basis-1/2 lg:basis-2/3"
+                className="pl-4 md:pl-8 md:basis-1/2 lg:basis-2/3"
               >
-                <div className="group relative rounded-2xl overflow-hidden glass hover:border-primary/30 transition-all duration-500 flex flex-col h-full">
+                <a
+                  href={item.link}
+                  className="group block rounded-2xl overflow-hidden border border-border bg-card hover:border-accent/30 transition-all duration-500"
+                >
+                  {/* Image area */}
                   <div className="relative h-64 md:h-[400px] w-full overflow-hidden bg-muted">
-                    {/* Fallback to simple img for external placeholder */}
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
                       unoptimized
-                      className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-in-out opacity-80 group-hover:opacity-100"
+                      className="object-cover w-full h-full transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-60"></div>
                   </div>
 
-                  <div className="p-6 md:p-8 flex flex-col flex-grow">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {item.services.map((service, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs font-medium px-3 py-1 rounded-full bg-card border border-border text-muted-foreground"
-                        >
-                          {service}
-                        </span>
-                      ))}
+                  {/* Content */}
+                  <div className="p-6 md:p-8">
+                    {/* Number + Tags row */}
+                    <div className="flex items-start justify-between mb-5">
+                      <span className="text-3xl font-bold text-accent-strong/40 font-mono-label !text-2xl">
+                        {item.number}
+                      </span>
+                      <div className="flex flex-wrap gap-2 justify-end">
+                        {item.services.map((service, idx) => (
+                          <span
+                            key={idx}
+                            className="font-mono-label !text-[0.65rem] px-3 py-1 rounded border border-border text-muted-foreground"
+                          >
+                            {service}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    <h3 className="text-2xl font-semibold mb-3 text-foreground">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-muted-foreground mb-8 flex-grow">
+                    <p className="text-muted-foreground leading-relaxed mb-6">
                       {item.description}
                     </p>
 
-                    <Button
-                      variant="outline"
-                      className="self-start group/btn"
-                      asChild
-                    >
-                      <a href={item.link}>
-                        Projekt ansehen
-                        <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
-                      </a>
-                    </Button>
+                    {/* Link arrow */}
+                    <div className="flex items-center gap-2 font-mono-label text-foreground/60 group-hover:text-accent-strong transition-colors">
+                      <span>View project</span>
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
                   </div>
-                </div>
+                </a>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="flex items-center justify-end gap-4 mt-8">
+          <div className="flex items-center justify-end gap-3 mt-10">
             <div className="relative">
-              <CarouselPrevious className="static translate-y-0 translate-x-0" />
+              <CarouselPrevious className="static translate-y-0 translate-x-0 rounded-full border border-border bg-card hover:bg-foreground hover:text-background transition-colors" />
             </div>
             <div className="relative">
-              <CarouselNext className="static translate-y-0 translate-x-0" />
+              <CarouselNext className="static translate-y-0 translate-x-0 rounded-full border border-border bg-card hover:bg-foreground hover:text-background transition-colors" />
             </div>
           </div>
         </Carousel>
